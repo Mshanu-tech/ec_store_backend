@@ -13,7 +13,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL || "http://localhost:5173", process.env.ADMIN_URL || "http://localhost:5174"],
+    origin: [process.env.CLIENT_URL || "https://ec-store-eight.vercel.app/", process.env.ADMIN_URL || "https://ec-store-admin-theta.vercel.app/"],
     credentials: true,
   })
 );
@@ -25,6 +25,10 @@ if (process.env.NODE_ENV !== "production") app.use(morgan("dev"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.get("/api/health", (req, res) => res.json({ success: true, message: "FreshCatch API is running" }));
+
+app.get("/", (req, res) => {
+  res.json({ success: true, message: "FreshCatch server is live" });
+});
 
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
